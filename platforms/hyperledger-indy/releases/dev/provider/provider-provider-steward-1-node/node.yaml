@@ -1,0 +1,100 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: provider-provider-steward-1-node
+  annotations:
+    fluxcd.io/automated: "false"
+  namespace: provider-ns
+spec:
+  releaseName: provider-provider-steward-1-node
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-node
+    git: https://github.com/sauveer/bevel.git
+    ref: main
+  values:
+    metadata:
+      name: provider-provider-steward-1-node
+      namespace: provider-ns
+    network:
+      name: bevel
+    organization:
+      name: provider
+    add_new_org: False
+    image:
+      pullSecret: regcred
+      initContainer:
+        name: provider-provider-steward-1-node-init
+        repository: alpine:3.9.4
+      cli:
+        name: provider-provider-steward-1-node-ledger-txn
+        repository: index.docker.io/hyperledgerlabs/indy-ledger-txn:latest
+        pullSecret: regcred
+      indyNode:
+        name: provider-provider-steward-1-node
+        repository: index.docker.io/hyperledgerlabs/indy-node:1.11.0
+    node:
+      name: provider-steward-1
+      ip: 0.0.0.0
+      publicIp: 54.242.89.55
+      port: 9711
+      ambassadorPort: 9711
+    client:
+      publicIp: 54.242.89.55
+      ip: 0.0.0.0
+      port: 9712
+      ambassadorPort: 9712
+    service:
+      type: ClusterIP
+      ports:
+        nodePort: 9711
+        nodeTargetPort: 9711
+        clientPort: 9712
+        clientTargetPort: 9712
+    configmap:
+      indyConfig: |-
+        NETWORK_NAME = 'bevel'
+        # Enable stdout logging
+        enableStdOutLogging = True
+        logRotationBackupCount = 10
+        # Directory to store ledger.
+        LEDGER_DIR = '/var/lib/indy/data'
+        # Directory to store logs.
+        LOG_DIR = '/var/log/indy'
+        # Directory to store keys.
+        KEYS_DIR = '/var/lib/indy/keys'
+        # Directory to store genesis transactions files.
+        GENESIS_DIR = '/var/lib/indy/genesis'
+        # Directory to store backups.
+        BACKUP_DIR = '/var/lib/indy/backup'
+        # Directory to store plugins.
+        PLUGINS_DIR = '/var/lib/indy/plugins'
+        # Directory to store node info.
+        NODE_INFO_DIR = '/var/lib/indy/data'
+    ambassador:
+      annotations: |-
+        ---
+        apiVersion: ambassador/v2
+        kind: TCPMapping
+        name: provider-provider-steward-1-node-node-mapping
+        port: 9711
+        service: provider-provider-steward-1-node.provider-ns:9711
+        ---
+        apiVersion: ambassador/v2
+        kind: TCPMapping
+        name: provider-provider-steward-1-node-client-mapping
+        port: 9712
+        service: provider-provider-steward-1-node.provider-ns:9712
+    vault:
+      address: http://a3df18bb47e8f41efb54e34322f59de4-825182735.us-east-1.elb.amazonaws.com:8200
+      serviceAccountName: provider-provider-steward-1-vault-auth
+      keyPath: /keys/bevel/keys/provider-steward-1
+      authPath: kubernetes-provider-provider-steward-1-auth
+      nodeId: provider-steward-1
+      role: ro
+    storage:
+      data:
+        storagesize: 3Gi
+        storageClassName: provider-aws-storageclass
+      keys:
+        storagesize: 3Gi
+        storageClassName: provider-aws-storageclass
