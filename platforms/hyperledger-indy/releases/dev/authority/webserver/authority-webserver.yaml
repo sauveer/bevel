@@ -1,0 +1,43 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: authority-webserver
+  annotations:
+    fluxcd.io/automated: "false"
+  namespace: authority-ns
+spec:
+  releaseName: authority-webserver
+  chart:
+    path: examples/identity-app/charts/webserver
+    git: https://github.com/sauveer/bevel.git
+    ref: main
+  values:
+    metadata:
+      namespace: authority-ns
+      name: authority-webserver
+    organization:
+      name: authority
+    image:
+      pullSecret: regcred
+      init:
+        name: authority-webserver-init
+        repository: alpine:3.9.4
+      server:
+        name: authority-webserver
+        repository: index.docker.io/sownak/von-network-base:1.11.0
+    service:
+      port: 8000
+    vault:
+      address: http://a3df18bb47e8f41efb54e34322f59de4-825182735.us-east-1.elb.amazonaws.com:8200
+      serviceAccountName: authority-authority-trustee-vault-auth
+      authPath: kubernetes-authority-authority-trustee-auth
+      trusteeName: authority-trustee
+      role: ro
+    storage:
+      size: 128Mi
+      className: authority-aws-storageclass
+    proxy:
+      
+      provider: "ambassador"
+      external_url: authority-webserver.ssi.entrustient.net
+      port: 15010
