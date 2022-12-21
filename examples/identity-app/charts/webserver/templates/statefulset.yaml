@@ -77,9 +77,9 @@ spec:
             - name: RESYNC_TIME
               value: "120"
             - name: REGISTER_NEW_DIDS
-              value: "True"
+              value: "False"
             - name: LEDGER_INSTANCE_NAME
-              value: "Hyperledger Bevel Sample App"
+              value: "Entrustient Ledger"
           volumeMounts:
             - name: {{ $.Values.organization.name }}-pool-transactions-genesis
               mountPath: /home/indy/ledger/sandbox/pool_transactions_genesis
