@@ -1,0 +1,32 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: partner-partner-endorser
+  annotations:
+    fluxcd.io/automated: "false"
+  namespace: partner-ns
+spec:
+  releaseName: partner-partner-endorser
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-key-mgmt
+    git: https://github.com/sauveer/bevel.git
+    ref: main
+  values:
+    metadata:
+      name: partner-partner-endorser
+      namespace: partner-ns
+    network:
+      name: bevel
+    image:
+      name: partner
+      repository: index.docker.io/hyperledgerlabs/indy-key-mgmt:1.11.0
+      pullSecret: regcred
+    vault:
+      address: http://a8e3897e42af646b49faf25942669568-584313495.us-east-1.elb.amazonaws.com:8200
+      version: "2"
+      keyPath: partner.endorsers
+      identity: partner-endorser
+      auth_path: kubernetes-partner-admin-auth
+    account:
+      service: partner-admin-vault-auth
+      role: rw
