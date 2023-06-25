@@ -17,12 +17,12 @@ spec:
       namespace: authority-ns
     network:
       name: bevel
-      kubernetes_url: https://7BFF136917E31CB861460C83A664A428.gr7.us-east-1.eks.amazonaws.com
+      kubernetes_url: https://359C9BD641315D040D39619F0F6E7FBE.yl4.us-east-1.eks.amazonaws.com
     image:
       name: authority
       repository: alpine:3.9.4
     vault:
-      address: http://a8e3897e42af646b49faf25942669568-584313495.us-east-1.elb.amazonaws.com:8200
+      address: http://localhost:8200
       identity: authority-trustee
       admin_auth_path: kubernetes-authority-admin-auth
       policy: authority-authority-trustee-ro
