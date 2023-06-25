@@ -11,7 +11,7 @@ image:
   repository: docker.io/fluxcd/flux
   tag: 1.24.0
   pullPolicy: IfNotPresent
-  pullSecret:
+  pullSecret: regcred
 
 service:
   type: ClusterIP
@@ -204,7 +204,7 @@ memcached:
   hostnameOverride:
   repository: memcached
   tag: 1.5.20
-  pullSecret:
+  pullSecret: regcred
   createClusterIP: true
   verbose: false
   maxItemSize: 5m
