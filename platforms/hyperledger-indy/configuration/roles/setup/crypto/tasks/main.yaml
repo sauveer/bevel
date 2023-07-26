@@ -44,6 +44,6 @@
 
 # ---------------------------------------------------------------------
 # check Vault for correct inserted indy crypto
-# - name: "Check Vault for Indy crypto"
-#   include_role:
-#     name: check/crypto
+- name: "Check Vault for Indy crypto"
+  include_role:
+    name: check/crypto
