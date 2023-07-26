@@ -31,7 +31,7 @@ spec:
       identity: bevel-ac
       admin_auth_path: kubernetes-authority-admin-auth
       policy: authority-bevel-ac-ro
-      policy_content: path \"/*\" { capabilities = [ \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
+      policy_content: path \"/*\" { capabilities = [ \"create\", \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
       auth_path: kubernetes-authority-bevel-ac-auth
     account:
       admin_service: authority-admin-vault-auth
