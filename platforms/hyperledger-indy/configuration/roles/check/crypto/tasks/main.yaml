@@ -55,6 +55,10 @@
     loop_var: endorserItem
   when: services.endorsers is defined
 
+- name: Print Token
+  debug:
+    msg: "Vault token: {{ vault_ac_token }}"
+
 ##############################################################################################
 # Check trustee in vault
 - name: "Check trustee in vault"
