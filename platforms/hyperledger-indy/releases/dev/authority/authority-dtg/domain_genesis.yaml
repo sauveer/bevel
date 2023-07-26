@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authority-dtg
+  annotations:
+    fluxcd.io/automated: "false"
+  namespace: authority-ns
+spec:
+  releaseName: authority-dtg
+  interval: 1m
+  chart:
+   spec:
+    chart: platforms/hyperledger-indy/charts/indy-domain-genesis
+    sourceRef:
+      kind: GitRepository
+      name: flux-indy
+      namespace: flux-indy
+  values:
+    metadata:
+      name: authority-dtg
+      namespace: authority-ns
+    organization:
+      name: authority
+    configmap:
+      domainGenesis: |-
+        {"reqSignature":{},"txn":{"data":{"alias":"authority-trustee","dest":"EoyMtXAc6nMcJTSYdNS2pA","role":"0","verkey":"8XZJ8Q6nDAHu5wvKDFEzGtdiLhhLkWk3FHrYTYF5EThW"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":1},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"provider-trustee","dest":"NAda6Tt34B9fBLfnoPDCyZ","role":"0","verkey":"CY6pdCaFCz4cvUp1EnS3PoR6UkrBZybvqZJvoBi6cydA"},"metadata":{"from":"EoyMtXAc6nMcJTSYdNS2pA"},"type":"1"},"txnMetadata":{"seqNo":2},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"provider-steward-1","dest":"Vri7ZjPLg9YWXbhNqfZ538","role":"2","verkey":"GjEEhcFCHLSmkFsVLVFnnkmEQGzHSAnU2BgGf8Fcmzq8"},"metadata":{"from":"NAda6Tt34B9fBLfnoPDCyZ"},"type":"1"},"txnMetadata":{"seqNo":3},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"provider-steward-2","dest":"HSYxJEztZt2QLF5ASJRRa6","role":"2","verkey":"9xidDZ3sUJo44tN2FWPCMkqM2DRwSm9UoYDUjnjFnma7"},"metadata":{"from":"NAda6Tt34B9fBLfnoPDCyZ"},"type":"1"},"txnMetadata":{"seqNo":4},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"partner-trustee","dest":"5i3Etpr2BsQXgPnEtXBxFV","role":"0","verkey":"3ZpHkaTf9MkvQNxk8AEEeBHWWpyVAVHgNJnWxPejqPL2"},"metadata":{"from":"EoyMtXAc6nMcJTSYdNS2pA"},"type":"1"},"txnMetadata":{"seqNo":5},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"partner-steward-1","dest":"QsS2NQDr8vqjLforbZrsF4","role":"2","verkey":"E1ZcDL4w8HKUDjpwHDQRhFKaLeSyE4Afg5KdkQdsamCG"},"metadata":{"from":"5i3Etpr2BsQXgPnEtXBxFV"},"type":"1"},"txnMetadata":{"seqNo":6},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"partner-steward-2","dest":"2uCRPZYdjzHEfvUNjZV3WJ","role":"2","verkey":"234YQKBidX3YHkwy7RGo9dJVauZs3t54Dj1QMmf8eW4B"},"metadata":{"from":"5i3Etpr2BsQXgPnEtXBxFV"},"type":"1"},"txnMetadata":{"seqNo":7},"ver":"1"}
