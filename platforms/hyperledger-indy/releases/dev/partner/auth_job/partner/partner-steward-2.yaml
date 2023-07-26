@@ -31,7 +31,7 @@ spec:
       identity: partner-steward-2
       admin_auth_path: kubernetes-partner-admin-auth
       policy: partner-partner-steward-2-ro
-      policy_content: path \"/*\" { capabilities = [ \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
+      policy_content: path \"/*\" { capabilities = [ \"create\", \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
       auth_path: kubernetes-partner-partner-steward-2-auth
     account:
       admin_service: partner-admin-vault-auth
