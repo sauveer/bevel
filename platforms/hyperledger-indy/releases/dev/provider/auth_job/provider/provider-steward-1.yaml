@@ -31,7 +31,7 @@ spec:
       identity: provider-steward-1
       admin_auth_path: kubernetes-provider-admin-auth
       policy: provider-provider-steward-1-ro
-      policy_content: path \"/*\" { capabilities = [ \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
+      policy_content: path \"/*\" { capabilities = [ \"create\", \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
       auth_path: kubernetes-provider-provider-steward-1-auth
     account:
       admin_service: provider-admin-vault-auth

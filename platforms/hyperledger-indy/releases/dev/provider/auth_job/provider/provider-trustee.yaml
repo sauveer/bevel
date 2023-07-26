@@ -31,7 +31,7 @@ spec:
       identity: provider-trustee
       admin_auth_path: kubernetes-provider-admin-auth
       policy: provider-provider-trustee-ro
-      policy_content: path \"/*\" { capabilities = [ \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
+      policy_content: path \"/*\" { capabilities = [ \"create\", \"read\", \"list\", \"update\", \"delete\", \"sudo\"] }
       auth_path: kubernetes-provider-provider-trustee-auth
     account:
       admin_service: provider-admin-vault-auth
